@@ -24,31 +24,37 @@ const masters = [
     name: 'Анна Петрова', 
     specialty: 'Топ мастер',
     experience: '8 лет опыта',
-    avatar: '👩‍🎨'
+    image: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400&h=400&fit=crop',
+    description: 'Специализируюсь на сложном дизайне и художественной росписи'
   },
   { 
     id: 2, 
     name: 'Мария Иванова', 
     specialty: 'Дизайн ногтей',
     experience: '5 лет опыта',
-    avatar: '💅'
+    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=400&fit=crop',
+    description: 'Создаю уникальные дизайны с использованием новейших техник'
   },
   { 
     id: 3, 
     name: 'Елена Смирнова', 
     specialty: 'Наращивание',
     experience: '6 лет опыта',
-    avatar: '✨'
+    image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop',
+    description: 'Эксперт по наращиванию и укреплению натуральных ногтей'
   },
 ];
 
 const gallery = [
-  { id: 1, color: 'bg-gradient-to-br from-pink-400 to-pink-600', title: 'Розовый градиент' },
-  { id: 2, color: 'bg-gradient-to-br from-yellow-400 to-orange-400', title: 'Золотое сияние' },
-  { id: 3, color: 'bg-gradient-to-br from-purple-400 to-pink-500', title: 'Фиолетовая мечта' },
-  { id: 4, color: 'bg-gradient-to-br from-blue-400 to-cyan-400', title: 'Морская волна' },
-  { id: 5, color: 'bg-gradient-to-br from-red-400 to-pink-500', title: 'Алый закат' },
-  { id: 6, color: 'bg-gradient-to-br from-green-400 to-emerald-500', title: 'Изумруд' },
+  { id: 1, image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&h=600&fit=crop', title: 'Нежный розовый маникюр', category: 'Классика' },
+  { id: 2, image: 'https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=600&h=600&fit=crop', title: 'Французский маникюр', category: 'Френч' },
+  { id: 3, image: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&h=600&fit=crop', title: 'Яркий дизайн', category: 'Дизайн' },
+  { id: 4, image: 'https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=600&h=600&fit=crop', title: 'Стразы и блестки', category: 'Праздничный' },
+  { id: 5, image: 'https://images.unsplash.com/photo-1599948128020-9a44a1f9a754?w=600&h=600&fit=crop', title: 'Минимализм', category: 'Минимализм' },
+  { id: 6, image: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&h=600&fit=crop', title: 'Геометрический дизайн', category: 'Геометрия' },
+  { id: 7, image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&h=600&fit=crop', title: 'Омбре градиент', category: 'Омбре' },
+  { id: 8, image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=600&h=600&fit=crop', title: 'Художественная роспись', category: 'Роспись' },
+  { id: 9, image: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=600&h=600&fit=crop', title: 'Матовое покрытие', category: 'Матовый' },
 ];
 
 const timeSlots = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00'];
@@ -149,7 +155,7 @@ export default function Index() {
                       <SelectContent>
                         {masters.map(master => (
                           <SelectItem key={master.id} value={master.id.toString()}>
-                            {master.avatar} {master.name} - {master.specialty}
+                            {master.name} - {master.specialty}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -300,8 +306,12 @@ export default function Index() {
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 <CardHeader className="text-center">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-6xl mb-4 mx-auto">
-                    {master.avatar}
+                  <div className="w-32 h-32 rounded-full overflow-hidden mb-4 mx-auto border-4 border-primary/20">
+                    <img 
+                      src={master.image} 
+                      alt={master.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <CardTitle className="text-2xl">{master.name}</CardTitle>
                   <CardDescription className="text-lg">
@@ -309,6 +319,9 @@ export default function Index() {
                     <div className="text-muted-foreground mt-1">{master.experience}</div>
                   </CardDescription>
                 </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-sm text-muted-foreground">{master.description}</p>
+                </CardContent>
               </Card>
             ))}
           </div>
@@ -319,14 +332,22 @@ export default function Index() {
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">Галерея работ</h2>
           <p className="text-center text-muted-foreground mb-12 text-lg">Примеры наших лучших работ</p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {gallery.map((item, index) => (
               <div 
                 key={item.id}
-                className={`${item.color} aspect-square rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer flex items-center justify-center text-white font-semibold text-xl animate-fade-in`}
+                className="group relative aspect-square rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer animate-fade-in"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <span className="opacity-0 hover:opacity-100 transition-opacity">{item.title}</span>
+                <img 
+                  src={item.image} 
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-end p-4">
+                  <p className="text-white font-semibold text-lg mb-1">{item.title}</p>
+                  <p className="text-white/80 text-sm">{item.category}</p>
+                </div>
               </div>
             ))}
           </div>
